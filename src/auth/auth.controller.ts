@@ -8,7 +8,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Request() req: { user: any }) {
+  login(@Request() req: { user: any }) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return this.authService.login(req.user);
   }
 }
