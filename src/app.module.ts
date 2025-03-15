@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { Product } from './product/product.entity';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { Product } from './product/product.entity';
       retryDelay: 3000,
     }),
     AuthModule,
+    ProductModule,
     CacheModule.register({
       store: redisStore,
       host: 'redis',
