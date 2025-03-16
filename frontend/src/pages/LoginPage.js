@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import { login } from "../services/api";
 
@@ -8,6 +9,8 @@ const LoginPage = () => {
     password: "",
   });
   const { setToken } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -17,6 +20,9 @@ const LoginPage = () => {
     e.preventDefault();
     const response = await login(credentials);
     setToken(response.data.token);
+    sessionStorage.setItem("token", response.data.token);
+    const redirectTo = location.state?.from || "/add-product";
+    navigate(redirectTo);
   };
 
   return (

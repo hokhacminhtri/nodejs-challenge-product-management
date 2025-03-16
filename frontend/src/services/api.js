@@ -16,5 +16,11 @@ export const likeProduct = (id, token) =>
     {},
     { headers: { Authorization: `Bearer ${token}` } }
   );
+export const unlikeProduct = (id, token) =>
+  axios.post(
+    `${API_URL}/products/${id}/unlike`,
+    {},
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
 export const login = (credentials) =>
   axios.post(`${API_URL}/auth/login`, credentials);

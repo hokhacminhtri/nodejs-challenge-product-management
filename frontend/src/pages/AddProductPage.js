@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import { addProduct } from "../services/api";
@@ -14,9 +14,12 @@ const AddProductPage = () => {
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  if (!token) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (!token && !storedToken) {
+      navigate("/login", { state: { from: "/add-product" } });
+    }
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -24,7 +27,9 @@ const AddProductPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addProduct(product, token);
+    const storedToken = sessionStorage.getItem("token");
+    const productToSubmit = { ...product, price: Number(product.price) };
+    await addProduct(productToSubmit, storedToken);
   };
 
   return (
@@ -39,7 +44,7 @@ const AddProductPage = () => {
           onChange={handleChange}
         />
         <input
-          type="text"
+          type="number"
           name="price"
           placeholder="Price"
           value={product.price}
