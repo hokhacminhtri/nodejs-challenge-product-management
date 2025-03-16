@@ -6,6 +6,7 @@
 - **Main Database**: MySQL
 - **Cache Database**: Redis
 - **Authentication**: JWT
+- **Front-end**: React
 
 ## Setup & Installation
 
@@ -14,13 +15,13 @@
 - [Node.js](https://nodejs.org/) (v14 or higher)
 - [Docker](https://www.docker.com/)
 
-### Installation
+### Backend
 
 1. Clone the repository:
 
    ```bash
    git clone https://github.com/your-repo/product-management-api.git
-   cd product-management-api
+   cd product-management-api/backend
    ```
 
 2. Install dependencies:
@@ -29,25 +30,72 @@
    npm install
    ```
 
-3. Start the services using Docker Compose:
+3. Copy `.sample.env` to `.env`:
+
+   ```bash
+   cp .sample.env .env
+   ```
+
+4. Start the services using Docker Compose:
 
    ```bash
    docker-compose up -d
    ```
 
-4. Seed the database:
+5. Seed the database:
 
    ```bash
    npm run seed
    ```
 
-5. Start the application:
+6. Start the application:
 
    ```bash
    npm run start
    ```
 
-6. The API will be available at `http://localhost:3000`.
+7. The API will be available at `http://localhost:3000`.
+
+8. Demo:
+
+   - **Running**:
+     ![Backend running Demo](backend/src/assets/images/backend-run.png)
+
+   - **Database Demo Video**:
+     [Watch Video](backend/src/assets/videos/databases-demo.webm)
+
+   - **Features Demo Video**:
+     [Watch Video](backend/src/assets/videos/features-demo.webm)
+
+### Frontend
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd ../frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the application:
+
+   ```bash
+   npm start
+   ```
+
+4. The frontend will be available at `http://localhost:3000`.
+
+5. Demo:
+
+   - **Running**:
+     ![Frontend running Demo](frontend/src/assets/images/frontend-run.png)
+
+   - **Frontend Demo Video**:
+     [Watch Video](frontend/src/assets/videos/frontend-demo.webm)
 
 ## API Documentation
 
@@ -184,4 +232,4 @@ The API uses Redis for caching to improve performance and reduce the load on the
 
 ### Like Feature
 
-The like feature allows users to like or unlike a product. Each user can only like a product once, and the number of likes is tracked. The `POST /products/:id/like` and `POST /products/:id/unlike` endpoints handle the like and unlike functionality, respectively. The like feature uses a toggle mechanism to ensure that a user can only like a product once.
+The like feature allows users to like or unlike a product. Each user can only like a product once, and the number of likes is tracked. The `POST /products/:id/like` and `POST /products/:id/unlike` endpoints handle the like and unlike functionality, respectively.
