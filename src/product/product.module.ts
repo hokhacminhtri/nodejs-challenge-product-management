@@ -1,4 +1,4 @@
-import { CacheModule } from '@nestjs/cache-manager';
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductController } from './product.controller';
@@ -8,7 +8,6 @@ import { ProductService } from './product.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product]),
-    CacheModule.register(), // Import CacheModule
   ],
   controllers: [ProductController],
   providers: [ProductService],

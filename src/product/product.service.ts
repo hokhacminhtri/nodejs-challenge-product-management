@@ -1,29 +1,39 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Cache } from 'cache-manager';
+import { createClient, RedisClientType } from 'redis';
 import { Like, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './product.entity';
 
 @Injectable()
-export class ProductService {
+export class ProductService implements OnModuleInit {
+  private redisClient: RedisClientType;
   private cacheKeys: Set<string> = new Set();
 
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) {
+    this.redisClient = createClient({
+      url: 'redis://127.0.0.1:6379',
+    });
+  }
+
+  async onModuleInit() {
+    await this.redisClient.connect();
+  }
 
   // Retrieve all products with pagination
   async findAll(page: number, limit: number): Promise<Product[]> {
     const cacheKey = `products_${page}_${limit}`;
-    const cachedProducts = await this.cacheManager.get<Product[]>(cacheKey);
+    const cachedProducts = await this.redisClient.get(cacheKey);
 
     if (cachedProducts) {
       console.log(`Cache hit for key: ${cacheKey}`);
-      return cachedProducts;
+      return JSON.parse(cachedProducts);
     } else {
       console.log(`Cache miss for key: ${cacheKey}`);
     }
@@ -33,7 +43,9 @@ export class ProductService {
       take: limit,
     });
 
-    await this.cacheManager.set(cacheKey, products, 300); // Cache for 5 minutes
+    await this.redisClient.set(cacheKey, JSON.stringify(products), {
+      EX: 300, // Cache for 5 minutes
+    });
     console.log(`Cache set for key: ${cacheKey}`);
     this.cacheKeys.add(cacheKey);
     return products;
@@ -81,7 +93,7 @@ export class ProductService {
   // Invalidate cache
   private async invalidateCache() {
     for (const key of this.cacheKeys) {
-      await this.cacheManager.del(key);
+      await this.redisClient.del(key);
       console.log(`Cache invalidated for key: ${key}`);
     }
     this.cacheKeys.clear();
