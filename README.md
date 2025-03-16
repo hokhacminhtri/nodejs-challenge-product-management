@@ -62,10 +62,10 @@
      ![Backend running Demo](backend/src/assets/images/backend-run.png)
 
    - **Database Demo Video**:
-     [Watch Video](backend/src/assets/videos/databases-demo.webm)
+     [Watch Video](backend/src/assets/videos/databases-demo.mp4)
 
    - **Features Demo Video**:
-     [Watch Video](backend/src/assets/videos/features-demo.webm)
+     [Watch Video](backend/src/assets/videos/features-demo.mp4)
 
 ### Frontend
 
@@ -95,7 +95,7 @@
      ![Frontend running Demo](frontend/src/assets/images/frontend-run.png)
 
    - **Frontend Demo Video**:
-     [Watch Video](frontend/src/assets/videos/frontend-demo.webm)
+     [Watch Video](frontend/src/assets/videos/frontend-demo.mp4)
 
 ## API Documentation
 
