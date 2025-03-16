@@ -10,15 +10,19 @@ import { AuthModule } from './auth/auth.module';
 import { Product } from './product/product.entity';
 import { ProductModule } from './product/product.module';
 
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1', // Use localhost when app runs on host machine
-      port: 3306,
-      username: 'user',
-      password: 'password',
-      database: 'productdb',
+      host: process.env.MYSQL_HOST,
+      port: parseInt(process.env.MYSQL_PORT || '3306', 10),
+      username: process.env.MYSQL_USERNAME,
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DATABASE,
       entities: [Product],
       synchronize: true,
       retryAttempts: 10,
@@ -35,7 +39,7 @@ export class AppModule implements OnModuleInit {
 
   constructor() {
     this.redisClient = createClient({
-      url: 'redis://127.0.0.1:6379',
+      url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
     });
   }
 

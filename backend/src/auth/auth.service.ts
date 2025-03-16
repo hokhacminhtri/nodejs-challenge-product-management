@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 interface User {
   username: string;
@@ -12,9 +15,10 @@ export class AuthService {
 
   // Validate user credentials
   validateUser(username: string, password: string): User | null {
-    // Implement your user validation logic here
-    // For example, check the username and password against a database
-    if (username === 'test' && password === 'password') {
+    const envUsername = process.env.AUTH_USERNAME;
+    const envPassword = process.env.AUTH_PASSWORD;
+
+    if (username === envUsername && password === envPassword) {
       return { username, userId: 1 };
     }
     return null;
