@@ -21,7 +21,7 @@
 
    ```bash
    git clone https://github.com/hokhacminhtri/nodejs-challenge-product-management.git
-   cd product-management-api/backend
+   cd ./backend
    ```
 
 2. Install dependencies:
@@ -69,10 +69,10 @@
 
 ### Frontend
 
-1. Navigate to the frontend directory:
+1. Open new teminal. From the repository, navigate to the frontend directory:
 
    ```bash
-   cd ../frontend
+   cd ./frontend
    ```
 
 2. Install dependencies:
