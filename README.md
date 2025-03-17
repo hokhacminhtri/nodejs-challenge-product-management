@@ -20,7 +20,7 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo/product-management-api.git
+   git clone https://github.com/hokhacminhtri/nodejs-challenge-product-management.git
    cd product-management-api/backend
    ```
 
